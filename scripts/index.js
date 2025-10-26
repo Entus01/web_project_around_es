@@ -48,11 +48,13 @@ const closeNewCardBtn = newCardModal.querySelector(".popup__close");
 
 const profileForm = document.querySelector(`#edit-profile-form`);
 const profileFormInputs = profileForm.querySelectorAll(".popup__input");
-const profileSubmitButton = profileForm.querySelector(`.popup__button`);
+const profileSubmitButton = profileForm.querySelector(`.popup__button`); 
 
 const cardForm = document.querySelector(`#new-card-form`);
 const cardFormInputs = cardForm.querySelectorAll(".popup__input");
 const cardSubmitButton = cardForm.querySelector(`.popup__button`);
+
+const overlay = document.querySelector(".page__content");
 
 function openModal(modal) {
   modal.classList.add(`popup_is-opened`);
@@ -83,14 +85,6 @@ function getCardElement(card) {
   cardTitle.textContent = card.name;
   cardImage.src = card.link;
   cardImage.alt = card.name;
-
-  if (cardTitle.textContent === "") {
-    cardTitle.textContent = "Sin título";
-  }
-  if (cardImage.src === "") {
-    cardImage.src = "../images/placeholder.jpg";
-    cardImage.alt = "Imagen de marcador de posición";
-  }
 
   const likeBtn = cardElement.querySelector(".card__like-button");
   likeBtn.addEventListener("click", function () {
@@ -199,6 +193,9 @@ profileEditButton.addEventListener("click", function () {
 
 closeProfileEditButton.addEventListener("click", function () {
   closeModal(profileEditModal);
+  profileFormInputs.forEach((inputElement) => {
+    hideInputError(inputElement);
+  });
 });
 
 profileEditModal.addEventListener(`submit`, handleProfileFormSubmit);
@@ -213,6 +210,22 @@ newCardBtn.addEventListener("click", function () {
 
 closeNewCardBtn.addEventListener("click", function () {
   closeModal(newCardModal);
+  cardFormInputs.forEach((inputElement) => {
+    hideInputError(inputElement);
+  });
 });
 
 newCardModal.addEventListener("submit", handleCardFormSubmit);
+
+overlay.addEventListener("click", (evt) => {
+    if (evt.target.classList.contains("popup_is-opened")) { 
+        closeModal(evt.target);
+    };
+});
+
+overlay.addEventListener("keydown", (evt) => {
+    if (evt.key === "Escape") {
+        const openedModal = document.querySelector(".popup_is-opened");
+        closeModal(openedModal);
+    };
+});
