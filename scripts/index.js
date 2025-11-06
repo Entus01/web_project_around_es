@@ -58,7 +58,7 @@ const cardSubmitButton = cardForm.querySelector(`.popup__button`);
 
 const overlay = document.querySelector(".page__content");
 
-class card {
+class Card {
   constructor(data, selector) {
     this.name = data.name;
     this.link = data.link;
@@ -73,14 +73,59 @@ class card {
     return cardElement;
   }
 
-  
+  _getCardElement(card) {
+    const cardElement = this._getTemplate();
+    const cardTitle = cardElement.querySelector(".card__title");
+    const cardImage = cardElement.querySelector(".card__image");
+
+    cardTitle.textContent = card.name;
+    cardImage.src = card.link;
+    cardImage.alt = card.name;
+
+    const likeBtn = cardElement.querySelector(".card__like-button");
+    likeBtn.addEventListener("click", function () {
+      likeBtn.classList.toggle("card__like-button_is-active");
+    });
+    const deleteBtn = cardElement.querySelector(".card__delete-button");
+    deleteBtn.addEventListener("click", function () {
+      cardElement.remove();
+    });
+
+    cardImage.addEventListener("click", function () {
+      const imageModal = document.querySelector("#image-popup");
+      const imageModalImg = imageModal.querySelector(".popup__image");
+      const imageModalCaption = imageModal.querySelector(".popup__caption");
+
+      imageModalImg.src = card.link;
+      imageModalImg.alt = card.name;
+      imageModalCaption.textContent = card.name;
+
+      openModal(imageModal);
+
+      const closeImageModalBtn = imageModal.querySelector(".popup__close");
+      closeImageModalBtn.addEventListener("click", function () {
+        closeModal(imageModal);
+      });
+    });
+
+    return cardElement;
+  };
+
+  generateCard(name, link, container) {
+    const card = { name, link };
+    const cardElement = this._getCardElement(card);
+    container.prepend(cardElement);
+  };
 }
 
 class formValidator {
   constructor(config, formElement) {
-    this._config = config;
+    this._selector = config.selector;
+    this._class = config.class;
     this._formElement = formElement;
-  }
+  };
+
+  
 }
 
 function fillProfileForm() {
@@ -98,50 +143,10 @@ function handleProfileFormSubmit(evt) {
   closeModal(profileEditModal);
 }
 
-function getCardElement(card) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardTitle = cardElement.querySelector(".card__title");
-  const cardImage = cardElement.querySelector(".card__image");
-
-  cardTitle.textContent = card.name;
-  cardImage.src = card.link;
-  cardImage.alt = card.name;
-
-  const likeBtn = cardElement.querySelector(".card__like-button");
-  likeBtn.addEventListener("click", function () {
-    likeBtn.classList.toggle("card__like-button_is-active");
-  });
-
-  const deleteBtn = cardElement.querySelector(".card__delete-button");
-  deleteBtn.addEventListener("click", function () {
-    cardElement.remove();
-  });
-
-  cardImage.addEventListener("click", function () {
-    const imageModal = document.querySelector("#image-popup");
-    const imageModalImg = imageModal.querySelector(".popup__image");
-    const imageModalCaption = imageModal.querySelector(".popup__caption");
-
-    imageModalImg.src = card.link;
-    imageModalImg.alt = card.name;
-    imageModalCaption.textContent = card.name;
-
-    openModal(imageModal);
-
-    const closeImageModalBtn = imageModal.querySelector(".popup__close");
-    closeImageModalBtn.addEventListener("click", function () {
-      closeModal(imageModal);
-    });
-  });
-
-  return cardElement;
-}
-
-function renderCard(name, link, container) {
-  const card = { name, link };
-  const cardElement = getCardElement(card);
-  container.prepend(cardElement);
-}
+initialCards.forEach((card) => {
+  const cardInstance = new Card(card, "#card-template");
+  cardInstance.generateCard(card.name, card.link, cardsContainer);
+});
 
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
@@ -220,10 +225,6 @@ closeProfileEditButton.addEventListener("click", function () {
 });
 
 profileEditModal.addEventListener(`submit`, handleProfileFormSubmit);
-
-initialCards.forEach(function (card) {
-  renderCard(card.name, card.link, document.querySelector(".cards__list"));
-});
 
 newCardBtn.addEventListener("click", function () {
   openModal(newCardModal);
