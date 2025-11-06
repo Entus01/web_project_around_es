@@ -58,6 +58,31 @@ const cardSubmitButton = cardForm.querySelector(`.popup__button`);
 
 const overlay = document.querySelector(".page__content");
 
+class card {
+  constructor(data, selector) {
+    this.name = data.name;
+    this.link = data.link;
+    this.selector = selector;
+  }
+
+  _getTemplate() {
+    const cardElement = document
+      .querySelector(this.selector)
+      .content.querySelector(".card")
+      .cloneNode(true);
+    return cardElement;
+  }
+
+  
+}
+
+class formValidator {
+  constructor(config, formElement) {
+    this._config = config;
+    this._formElement = formElement;
+  }
+}
+
 function fillProfileForm() {
   profileNameInput.value = profileName.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
