@@ -1,0 +1,1 @@
+/*Importar recursos de index.js, card.js y utils.js*/

@@ -1,3 +1,5 @@
+import { openModal, closeModal } from "./utils.js";
+
 const initialCards = [
   {
     name: "Valle de Yosemite",
@@ -56,12 +58,6 @@ const cardSubmitButton = cardForm.querySelector(`.popup__button`);
 
 const overlay = document.querySelector(".page__content");
 
-function openModal(modal) {
-  modal.classList.add(`popup_is-opened`);
-}
-function closeModal(modal) {
-  modal.classList.remove(`popup_is-opened`);
-}
 function fillProfileForm() {
   profileNameInput.value = profileName.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
