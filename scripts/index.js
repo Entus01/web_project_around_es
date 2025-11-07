@@ -1,6 +1,6 @@
 import { openModal, closeModal } from "./utils.js";
 import { Card } from "./Card.js";
-import { FormValidator } from "./FormValidator.js";
+import { FormValidator } from "./formValidator.js";
 
 const initialCards = [
   {
@@ -42,9 +42,6 @@ const profileDescriptionInput = profileEditModal.querySelector(
   ".popup__input_type_description"
 );
 
-const cardTemplate = document
-  .querySelector("#card-template")
-  .content.querySelector(".card");
 const cardsContainer = document.querySelector(".cards__list");
 const newCardBtn = document.querySelector(".profile__add-button");
 const newCardModal = document.querySelector("#new-card-popup");
