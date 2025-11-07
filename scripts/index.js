@@ -1,4 +1,5 @@
 import { openModal, closeModal } from "./utils.js";
+import { Card } from "./card.js";
 
 const initialCards = [
   {
@@ -58,75 +59,10 @@ const cardSubmitButton = cardForm.querySelector(`.popup__button`);
 
 const overlay = document.querySelector(".page__content");
 
-class Card {
-  constructor(data, selector) {
-    this.name = data.name;
-    this.link = data.link;
-    this.selector = selector;
-  }
-
-  _getTemplate() {
-    const cardElement = document
-      .querySelector(this.selector)
-      .content.querySelector(".card")
-      .cloneNode(true);
-    return cardElement;
-  }
-
-  _getCardElement(card) {
-    const cardElement = this._getTemplate();
-    const cardTitle = cardElement.querySelector(".card__title");
-    const cardImage = cardElement.querySelector(".card__image");
-
-    cardTitle.textContent = card.name;
-    cardImage.src = card.link;
-    cardImage.alt = card.name;
-
-    const likeBtn = cardElement.querySelector(".card__like-button");
-    likeBtn.addEventListener("click", function () {
-      likeBtn.classList.toggle("card__like-button_is-active");
-    });
-    const deleteBtn = cardElement.querySelector(".card__delete-button");
-    deleteBtn.addEventListener("click", function () {
-      cardElement.remove();
-    });
-
-    cardImage.addEventListener("click", function () {
-      const imageModal = document.querySelector("#image-popup");
-      const imageModalImg = imageModal.querySelector(".popup__image");
-      const imageModalCaption = imageModal.querySelector(".popup__caption");
-
-      imageModalImg.src = card.link;
-      imageModalImg.alt = card.name;
-      imageModalCaption.textContent = card.name;
-
-      openModal(imageModal);
-
-      const closeImageModalBtn = imageModal.querySelector(".popup__close");
-      closeImageModalBtn.addEventListener("click", function () {
-        closeModal(imageModal);
-      });
-    });
-
-    return cardElement;
-  };
-
-  generateCard(name, link, container) {
-    const card = { name, link };
-    const cardElement = this._getCardElement(card);
-    container.prepend(cardElement);
-  };
-}
-
-class formValidator {
-  constructor(config, formElement) {
-    this._selector = config.selector;
-    this._class = config.class;
-    this._formElement = formElement;
-  };
-
-  
-}
+initialCards.forEach((card) => {
+  const cardInstance = new Card(card, "#card-template");
+  cardInstance.generateCard(card.name, card.link, cardsContainer);
+});
 
 function fillProfileForm() {
   profileNameInput.value = profileName.textContent;
@@ -143,11 +79,6 @@ function handleProfileFormSubmit(evt) {
   closeModal(profileEditModal);
 }
 
-initialCards.forEach((card) => {
-  const cardInstance = new Card(card, "#card-template");
-  cardInstance.generateCard(card.name, card.link, cardsContainer);
-});
-
 function handleCardFormSubmit(evt) {
   evt.preventDefault();
   const cardNameUInput = newCardModal.querySelector(
@@ -157,6 +88,20 @@ function handleCardFormSubmit(evt) {
   renderCard(cardNameUInput.value, cardLinkInput.value, cardsContainer);
   evt.target.reset();
   closeModal(newCardModal);
+}
+
+class FormValidator {
+  constructor(element, selector) {
+    this.selector = selector;
+    this._element = element;
+  };
+
+  _mergeInputs() {
+    this._inputList = this._element.querySelectorAll(this.selector.input);
+    _setEventListeners();
+  };
+
+  _setEventListeners
 }
 
 function showInputError(inputElement, errorMessage) {
