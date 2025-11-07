@@ -1,5 +1,3 @@
-/* Functions to open and close modals */
-
 function openModal(modal) {
   modal.classList.add(`popup_is-opened`);
 }

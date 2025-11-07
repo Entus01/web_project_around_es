@@ -9,8 +9,6 @@ export class FormValidator {
     this._buttonElement = this._element.querySelector(this.selector.submitButton);
     this._toggleButtonState();
 
-    console.log(this._inputList);
-
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         if (!inputElement.validity.valid) {

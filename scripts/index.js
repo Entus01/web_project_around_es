@@ -1,5 +1,5 @@
 import { openModal, closeModal } from "./utils.js";
-import { Card } from "./Card.js";
+import { Card } from "./card.js";
 import { FormValidator } from "./formValidator.js";
 
 const initialCards = [
@@ -49,11 +49,9 @@ const closeNewCardBtn = newCardModal.querySelector(".popup__close");
 
 const profileForm = document.querySelector(`#edit-profile-form`);
 const profileFormInputs = profileForm.querySelectorAll(".popup__input");
-const profileSubmitButton = profileForm.querySelector(`.popup__button`); 
 
 const cardForm = document.querySelector(`#new-card-form`);
 const cardFormInputs = cardForm.querySelectorAll(".popup__input");
-const cardSubmitButton = cardForm.querySelector(`.popup__button`);
 
 const overlay = document.querySelector(".page__content");
 

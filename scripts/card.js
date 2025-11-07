@@ -1,4 +1,4 @@
-/* Class of a card element */
+import { openModal, closeModal } from "./utils.js";
 
 export class Card {
   constructor(data, selector) {
