@@ -96,12 +96,12 @@ const profileFormValidator = new FormValidator(profileForm, {
   submitButton: ".popup__button",
 });
 profileFormValidator.setEventListeners();
-
 const cardFormValidator = new FormValidator(cardForm, {
   input: ".popup__input",
   submitButton: ".popup__button",
 });
 cardFormValidator.setEventListeners();
+
 
 profileEditButton.addEventListener("click", function () {
   handleOpenEditModal();

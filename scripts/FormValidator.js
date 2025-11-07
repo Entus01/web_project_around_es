@@ -1,5 +1,3 @@
-/*Importar recursos de index.js, card.js y utils.js*/
-
 export class FormValidator {
   constructor(element, selector) {
     this._element = element;
@@ -10,6 +8,8 @@ export class FormValidator {
     this._inputList = this._element.querySelectorAll(this.selector.input);
     this._buttonElement = this._element.querySelector(this.selector.submitButton);
     this._toggleButtonState();
+
+    console.log(this._inputList);
 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
@@ -53,4 +53,3 @@ export class FormValidator {
     errorElement.classList.remove(`popup__input-error_active`);
   };
 }
-
