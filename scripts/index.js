@@ -92,71 +92,71 @@ function handleCardFormSubmit(evt) {
 
 class FormValidator {
   constructor(element, selector) {
-    this.selector = selector;
     this._element = element;
+    this.selector = selector;
   };
 
-  _mergeInputs() {
+  setEventListeners() {
     this._inputList = this._element.querySelectorAll(this.selector.input);
-    _setEventListeners();
+    this._buttonElement = this._element.querySelector(this.selector.submitButton);
+    this._toggleButtonState();
+
+    console.log(this._inputList);
+
+    this._inputList.forEach((inputElement) => {
+      inputElement.addEventListener("input", () => {
+        if (!inputElement.validity.valid) {
+          this._showInputError(inputElement, inputElement.validationMessage);
+        } else {
+          this._hideInputError(inputElement);
+        }
+        this._toggleButtonState();
+      });
+    });
   };
 
-  _setEventListeners
-}
-
-function showInputError(inputElement, errorMessage) {
-  const errorElement = document.querySelector(
-    `.${inputElement.id}-input-error`
-  );
-  inputElement.classList.add(`popup__input_type_error`);
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add(`popup__input-error_active`);
-}
-
-function hideInputError(inputElement) {
-  const errorElement = document.querySelector(
-    `.${inputElement.id}-input-error`
-  );
-  inputElement.classList.remove(`popup__input_type_error`);
-  errorElement.textContent = "";
-  errorElement.classList.remove(`popup__input-error_active`);
-}
-
-function isFormValid(inputList) {
-  return Array.from(inputList).every(
-    (inputElement) => inputElement.validity.valid
-  );
-}
-
-function toggleButtonState(inputList, ButtonElement) {
-  if (isFormValid(inputList)) {
-    ButtonElement.disabled = false;
-  } else {
-    ButtonElement.disabled = true;
-  }
-}
-
-profileFormInputs.forEach((inputElement) => {
-  inputElement.addEventListener("input", () => {
-    if (!inputElement.validity.valid) {
-      showInputError(inputElement, inputElement.validationMessage);
+  _toggleButtonState() {
+    if (this._isFormValid()) {
+      this._buttonElement.disabled = false;
     } else {
-      hideInputError(inputElement);
+      this._buttonElement.disabled = true;
     }
-    toggleButtonState(profileFormInputs, profileSubmitButton);
-  });
-});
+  };
 
-cardFormInputs.forEach((inputElement) => {
-    inputElement.addEventListener("input", () => {
-        if (!inputElement.validity.valid) {
-            showInputError(inputElement, inputElement.validationMessage);
-        } else {
-            hideInputError(inputElement);
-        };
-        toggleButtonState(cardFormInputs, cardSubmitButton);
-    });
+  _isFormValid() {
+    return Array.from(this._inputList).every(
+      (inputElement) => inputElement.validity.valid
+    );
+  };
+
+  _showInputError(inputElement, errorMessage) {
+    const errorElement = document.querySelector(`.${inputElement.id}-input-error`);
+    inputElement.classList.add(`popup__input_type_error`);
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add(`popup__input-error_active`);
+  };
+
+  _hideInputError(inputElement) {
+    const errorElement = document.querySelector(
+      `.${inputElement.id}-input-error`
+    );
+    inputElement.classList.remove(`popup__input_type_error`);
+    errorElement.textContent = "";
+    errorElement.classList.remove(`popup__input-error_active`);
+  };
+}
+
+const profileFormValidator = new FormValidator(profileForm, {
+  input: ".popup__input",
+  submitButton: ".popup__button",
 });
+profileFormValidator.setEventListeners();
+
+const cardFormValidator = new FormValidator(cardForm, {
+  input: ".popup__input",
+  submitButton: ".popup__button",
+});
+cardFormValidator.setEventListeners();
 
 profileEditButton.addEventListener("click", function () {
   handleOpenEditModal();
@@ -165,7 +165,7 @@ profileEditButton.addEventListener("click", function () {
 closeProfileEditButton.addEventListener("click", function () {
   closeModal(profileEditModal);
   profileFormInputs.forEach((inputElement) => {
-    hideInputError(inputElement);
+    profileFormValidator._hideInputError(inputElement);
   });
 });
 
@@ -178,7 +178,7 @@ newCardBtn.addEventListener("click", function () {
 closeNewCardBtn.addEventListener("click", function () {
   closeModal(newCardModal);
   cardFormInputs.forEach((inputElement) => {
-    hideInputError(inputElement);
+    cardFormValidator._hideInputError(inputElement);
   });
 });
 
