@@ -21,6 +21,28 @@ export const initialCards = [
   },
   {
     name: "Lago di Braies",
-    linl: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg",
   },
 ];
+
+export const profileEditButton = document.querySelector(".profile__edit-button");
+export const profileEditModal = document.querySelector(`#edit-popup`);
+export const closeProfileEditButton = profileEditModal.querySelector(".popup__close");
+
+export const profileName = document.querySelector(".profile__title");
+export const profileDescription = document.querySelector(".profile__description");
+export const profileNameInput = profileEditModal.querySelector(".popup__input_type_name");
+export const profileDescriptionInput = profileEditModal.querySelector(".popup__input_type_description");
+
+export const cardsContainer = document.querySelector(".cards__list");
+export const newCardBtn = document.querySelector(".profile__add-button");
+export const newCardModal = document.querySelector("#new-card-popup");
+export const closeNewCardBtn = newCardModal.querySelector(".popup__close");
+
+export const profileForm = document.querySelector(`#edit-profile-form`);
+export const profileFormInputs = profileForm.querySelectorAll(".popup__input");
+
+export const cardForm = document.querySelector(`#new-card-form`);
+export const cardFormInputs = cardForm.querySelectorAll(".popup__input");
+
+export const overlay = document.querySelector(".page__content");
