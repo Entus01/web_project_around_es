@@ -127,6 +127,9 @@ newCardModal.addEventListener("submit", handleCardFormSubmit);
 overlay.addEventListener("click", (evt) => {
     if (evt.target.classList.contains("popup_is-opened")) { 
         closeModal(evt.target);
+        cardFormInputs.forEach((inputElement) => {
+        cardFormValidator._hideInputError(inputElement);
+  });
     };
 });
 
@@ -134,5 +137,8 @@ overlay.addEventListener("keydown", (evt) => {
     if (evt.key === "Escape") {
         const openedModal = document.querySelector(".popup_is-opened");
         closeModal(openedModal);
+        cardFormInputs.forEach((inputElement) => {
+    cardFormValidator._hideInputError(inputElement);
+  });
     };
 });
