@@ -1,6 +1,6 @@
-import { openModal, closeModal } from "./utils.js";
-import { Card } from "./card.js";
-import { FormValidator } from "./formValidator.js";
+import { openModal, closeModal } from "../utils/utils.js";
+import { Card } from "../components/Card.js";
+import { FormValidator } from "../components/FormValidator.js";
 
 const initialCards = [
   {
