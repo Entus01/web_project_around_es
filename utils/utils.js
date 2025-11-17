@@ -3,7 +3,7 @@ import {
   profileDescription,
   profileNameInput,
   profileDescriptionInput,
-  profileEditModal
+  profileEditModal,
 } from "./constants.js";
 
 export function openModal(modal) {

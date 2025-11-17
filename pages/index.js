@@ -1,4 +1,5 @@
-import { initialCards,
+import {
+  initialCards,
   profileEditButton,
   profileEditModal,
   closeProfileEditButton,
@@ -10,13 +11,14 @@ import { initialCards,
   profileFormInputs,
   cardForm,
   cardFormInputs,
-  overlay
+  overlay,
 } from "../utils/constants.js";
-import { openModal,
+import {
+  openModal,
   closeModal,
   handleOpenEditModal,
   handleProfileFormSubmit,
-  handleCardFormSubmit
+  handleCardFormSubmit,
 } from "../utils/utils.js";
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
@@ -37,7 +39,6 @@ const cardFormValidator = new FormValidator(cardForm, {
   submitButton: ".popup__button",
 });
 cardFormValidator.setEventListeners();
-
 
 profileEditButton.addEventListener("click", function () {
   handleOpenEditModal();
@@ -61,25 +62,34 @@ closeNewCardBtn.addEventListener("click", function () {
   cardFormInputs.forEach((inputElement) => {
     cardFormValidator._hideInputError(inputElement);
   });
+  cardForm.reset();
 });
 
 newCardModal.addEventListener("submit", handleCardFormSubmit);
 
 overlay.addEventListener("click", (evt) => {
-    if (evt.target.classList.contains("popup_is-opened")) { 
-        closeModal(evt.target);
-        cardFormInputs.forEach((inputElement) => {
-        cardFormValidator._hideInputError(inputElement);
-  });
-    };
+  if (evt.target.classList.contains("popup_is-opened")) {
+    closeModal(evt.target);
+    cardFormInputs.forEach((inputElement) => {
+      cardFormValidator._hideInputError(inputElement);
+    });
+    profileFormInputs.forEach((inputElement) => {
+      profileFormValidator._hideInputError(inputElement);
+    });
+    cardForm.reset();
+  }
 });
 
 overlay.addEventListener("keydown", (evt) => {
-    if (evt.key === "Escape") {
-        const openedModal = document.querySelector(".popup_is-opened");
-        closeModal(openedModal);
-        cardFormInputs.forEach((inputElement) => {
-    cardFormValidator._hideInputError(inputElement);
-  });
-    };
+  if (evt.key === "Escape") {
+    const openedModal = document.querySelector(".popup_is-opened");
+    closeModal(openedModal);
+    cardFormInputs.forEach((inputElement) => {
+      cardFormValidator._hideInputError(inputElement);
+    });
+    profileFormInputs.forEach((inputElement) => {
+      profileFormValidator._hideInputError(inputElement);
+    });
+    cardForm.reset();
+  }
 });

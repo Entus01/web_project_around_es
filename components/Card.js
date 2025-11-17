@@ -51,11 +51,11 @@ export class Card {
     });
 
     return cardElement;
-  };
+  }
 
   generateCard(name, link, container) {
     const card = { name, link };
     const cardElement = this._getCardElement(card);
     container.prepend(cardElement);
-  };
+  }
 }

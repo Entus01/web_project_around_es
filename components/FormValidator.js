@@ -2,11 +2,13 @@ export class FormValidator {
   constructor(element, selector) {
     this._element = element;
     this.selector = selector;
-  };
+  }
 
   setEventListeners() {
     this._inputList = this._element.querySelectorAll(this.selector.input);
-    this._buttonElement = this._element.querySelector(this.selector.submitButton);
+    this._buttonElement = this._element.querySelector(
+      this.selector.submitButton
+    );
     this._toggleButtonState();
 
     this._inputList.forEach((inputElement) => {
@@ -19,7 +21,7 @@ export class FormValidator {
         this._toggleButtonState();
       });
     });
-  };
+  }
 
   _toggleButtonState() {
     if (this._isFormValid()) {
@@ -27,20 +29,22 @@ export class FormValidator {
     } else {
       this._buttonElement.disabled = true;
     }
-  };
+  }
 
   _isFormValid() {
     return Array.from(this._inputList).every(
       (inputElement) => inputElement.validity.valid
     );
-  };
+  }
 
   _showInputError(inputElement, errorMessage) {
-    const errorElement = document.querySelector(`.${inputElement.id}-input-error`);
+    const errorElement = document.querySelector(
+      `.${inputElement.id}-input-error`
+    );
     inputElement.classList.add(`popup__input_type_error`);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(`popup__input-error_active`);
-  };
+  }
 
   _hideInputError(inputElement) {
     const errorElement = document.querySelector(
@@ -49,5 +53,5 @@ export class FormValidator {
     inputElement.classList.remove(`popup__input_type_error`);
     errorElement.textContent = "";
     errorElement.classList.remove(`popup__input-error_active`);
-  };
+  }
 }
