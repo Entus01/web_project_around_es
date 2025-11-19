@@ -1,4 +1,4 @@
-import { openModal, closeModal } from "../utils/utils.js";
+import { openModal, closeModal } from "../utils/functions.js";
 
 export class Card {
   constructor(data, selector) {
