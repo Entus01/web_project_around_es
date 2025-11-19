@@ -20,29 +20,8 @@ import {
   handleProfileFormSubmit,
   handleCardFormSubmit,
 } from "../utils/functions.js";
-import { Card } from "../components/Card.js";
-import { FormValidator } from "../components/FormValidator.js";
-import { Section } from "../components/Section.js";
-
-// Render initial cards
-
-const section = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      const cardInstance = new Card(item, "#card-template");
-      const cardElement = cardInstance.generateCard(
-        item.name,
-        item.link,
-        cardsContainer
-      );
-      section.setItem(cardElement);
-    }
-  },
-  ".cards__list"
-);
-
-section.renderItems();
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
 
 initialCards.forEach((card) => {
   const cardInstance = new Card(card, "#card-template");
