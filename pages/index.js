@@ -22,6 +22,10 @@ import {
 } from "../utils/functions.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
+import Popup from "../components/Popup.js";
+import PopupWithForm from "../components/PopupWithForm.js";
+import PopupwithImage from "../components/PopupWithImage.js";
+import Section from "../components/Section.js";
 
 initialCards.forEach((card) => {
   const cardInstance = new Card(card, "#card-template");
@@ -40,6 +44,18 @@ const cardFormValidator = new FormValidator(cardForm, {
 });
 cardFormValidator.setEventListeners();
 
+const profileEditForm = new PopupWithForm(
+  "#profile-edit-modal",
+  handleProfileFormSubmit
+);
+profileEditForm.setEventListeners();
+
+const newCardForm = new PopupWithForm(
+  "#new-card-modal",
+  handleCardFormSubmit
+);
+newCardForm.setEventListeners();
+
 profileEditButton.addEventListener("click", function () {
   handleOpenEditModal();
 });
@@ -50,8 +66,6 @@ closeProfileEditButton.addEventListener("click", function () {
     profileFormValidator._hideInputError(inputElement);
   });
 });
-
-profileEditModal.addEventListener(`submit`, handleProfileFormSubmit);
 
 newCardBtn.addEventListener("click", function () {
   openModal(newCardModal);
@@ -64,8 +78,6 @@ closeNewCardBtn.addEventListener("click", function () {
   });
   cardForm.reset();
 });
-
-newCardModal.addEventListener("submit", handleCardFormSubmit);
 
 overlay.addEventListener("click", (evt) => {
   if (evt.target.classList.contains("popup_is-opened")) {
