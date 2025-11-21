@@ -27,10 +27,32 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupwithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 
-initialCards.forEach((card) => {
+/*1. Crear las instancias de las tarjetas iniciales del perfil*/
+
+/*initialCards.forEach((card) => {
   const cardInstance = new Card(card, "#card-template");
   cardInstance.generateCard(card.name, card.link, cardsContainer);
-});
+});*/
+
+const initialCardsSection = new Section(
+  {
+    items: initialCards,
+    renderer: (item) => {
+      const cardInstance = new Card(item, "#card-template");
+      const cardElement = cardInstance.generateCard(
+        item.name,
+        item.link,
+        cardsContainer
+      );
+      initialCardsSection.setItem(cardElement);
+    }
+  },
+  cardsContainer
+);
+
+initialCardsSection.renderItems();
+
+/*2. Validación de formularios*/
 
 const profileFormValidator = new FormValidator(profileForm, {
   input: ".popup__input",
@@ -44,19 +66,9 @@ const cardFormValidator = new FormValidator(cardForm, {
 });
 cardFormValidator.setEventListeners();
 
-const profileEditForm = new PopupWithForm(
-  "#profile-edit-modal",
-  handleProfileFormSubmit
-);
-profileEditForm.setEventListeners();
+/*3. Manejo de modales*/
 
-const newCardForm = new PopupWithForm(
-  "#new-card-modal",
-  handleCardFormSubmit
-);
-newCardForm.setEventListeners();
-
-profileEditButton.addEventListener("click", function () {
+/*profileEditButton.addEventListener("click", function () {
   handleOpenEditModal();
 });
 
@@ -77,31 +89,18 @@ closeNewCardBtn.addEventListener("click", function () {
     cardFormValidator._hideInputError(inputElement);
   });
   cardForm.reset();
-});
+});*/
 
-overlay.addEventListener("click", (evt) => {
-  if (evt.target.classList.contains("popup_is-opened")) {
-    closeModal(evt.target);
-    cardFormInputs.forEach((inputElement) => {
-      cardFormValidator._hideInputError(inputElement);
-    });
-    profileFormInputs.forEach((inputElement) => {
-      profileFormValidator._hideInputError(inputElement);
-    });
-    cardForm.reset();
-  }
-});
+/*4. Crear las instancias de los popups*/
 
-overlay.addEventListener("keydown", (evt) => {
-  if (evt.key === "Escape") {
-    const openedModal = document.querySelector(".popup_is-opened");
-    closeModal(openedModal);
-    cardFormInputs.forEach((inputElement) => {
-      cardFormValidator._hideInputError(inputElement);
-    });
-    profileFormInputs.forEach((inputElement) => {
-      profileFormValidator._hideInputError(inputElement);
-    });
-    cardForm.reset();
-  }
-});
+/*const profileEditForm = new PopupWithForm(
+  "#profile-edit-modal",
+  handleProfileFormSubmit
+);
+profileEditForm.setEventListeners();
+
+const newCardForm = new PopupWithForm(
+  "#new-card-modal",
+  handleCardFormSubmit
+);
+newCardForm.setEventListeners();*/
