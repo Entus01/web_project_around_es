@@ -1,5 +1,3 @@
-import { openModal, closeModal } from "../utils/functions.js";
-
 export default class Card {
   constructor(data, selector) {
     this.name = data.name;
@@ -33,7 +31,7 @@ export default class Card {
       cardElement.remove();
     });
 
-    cardImage.addEventListener("click", function () {
+    /*cardImage.addEventListener("click", function () {
       const imageModal = document.querySelector("#image-popup");
       const imageModalImg = imageModal.querySelector(".popup__image");
       const imageModalCaption = imageModal.querySelector(".popup__caption");
@@ -42,20 +40,19 @@ export default class Card {
       imageModalImg.alt = card.name;
       imageModalCaption.textContent = card.name;
 
-      openModal(imageModal);
-
       const closeImageModalBtn = imageModal.querySelector(".popup__close");
       closeImageModalBtn.addEventListener("click", function () {
-        closeModal(imageModal);
+        handleCardClick();
       });
-    });
+    });*/
 
     return cardElement;
   }
 
-  generateCard(name, link, container) {
+  generateCard(name, link) {
     const card = { name, link };
     const cardElement = this._getCardElement(card);
-    container.prepend(cardElement);
+
+    return cardElement;
   }
 }

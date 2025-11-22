@@ -22,7 +22,6 @@ import {
 } from "../utils/functions.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
-import Popup from "../components/Popup.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import PopupwithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
@@ -52,21 +51,7 @@ const initialCardsSection = new Section(
 
 initialCardsSection.renderItems();
 
-/*2. Validación de formularios*/
-
-const profileFormValidator = new FormValidator(profileForm, {
-  input: ".popup__input",
-  submitButton: ".popup__button",
-});
-profileFormValidator.setEventListeners();
-
-const cardFormValidator = new FormValidator(cardForm, {
-  input: ".popup__input",
-  submitButton: ".popup__button",
-});
-cardFormValidator.setEventListeners();
-
-/*3. Manejo de modales*/
+/*2. Manejo de modales*/
 
 /*profileEditButton.addEventListener("click", function () {
   handleOpenEditModal();
@@ -90,6 +75,21 @@ closeNewCardBtn.addEventListener("click", function () {
   });
   cardForm.reset();
 });*/
+
+/*3. Validación de formularios*/
+
+const profileFormValidator = new FormValidator(profileForm, {
+  input: ".popup__input",
+  submitButton: ".popup__button",
+});
+profileFormValidator.setEventListeners();
+
+const cardFormValidator = new FormValidator(cardForm, {
+  input: ".popup__input",
+  submitButton: ".popup__button",
+});
+cardFormValidator.setEventListeners();
+
 
 /*4. Crear las instancias de los popups*/
 
