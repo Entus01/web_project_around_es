@@ -29,8 +29,6 @@ export const profileEditButton = document.querySelector(
   ".profile__edit-button"
 );
 export const profileEditModal = document.querySelector(`#edit-popup`);
-export const closeProfileEditButton =
-  profileEditModal.querySelector(".popup__close");
 
 export const profileName = document.querySelector(".profile__title");
 export const profileDescription = document.querySelector(

@@ -2,7 +2,6 @@ import {
   initialCards,
   profileEditButton,
   profileEditModal,
-  closeProfileEditButton,
   cardsContainer,
   newCardBtn,
   newCardModal,
@@ -14,11 +13,9 @@ import {
   overlay,
 } from "../utils/constants.js";
 import {
-  openModal,
-  closeModal,
-  handleOpenEditModal,
   handleProfileFormSubmit,
   handleCardFormSubmit,
+  fillProfileForm
 } from "../utils/functions.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -26,12 +23,7 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupwithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 
-/*1. Crear las instancias de las tarjetas iniciales del perfil*/
-
-/*initialCards.forEach((card) => {
-  const cardInstance = new Card(card, "#card-template");
-  cardInstance.generateCard(card.name, card.link, cardsContainer);
-});*/
+/*1. Renderizar las tarjetas iniciales*/
 
 const initialCardsSection = new Section(
   {
@@ -51,7 +43,17 @@ const initialCardsSection = new Section(
 
 initialCardsSection.renderItems();
 
-/*2. Manejo de modales*/
+/*2. Manejo de los modales*/
+
+profileEditButton.addEventListener("click", () => {
+  const profileEditForm = new PopupWithForm(
+    profileEditModal, handleProfileFormSubmit
+  );
+  profileEditForm.open();
+  profileEditForm.setEventListeners();
+
+  fillProfileForm();
+});
 
 /*profileEditButton.addEventListener("click", function () {
   handleOpenEditModal();

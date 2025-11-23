@@ -6,22 +6,9 @@ import {
   profileEditModal,
 } from "./constants.js";
 
-export function openModal(modal) {
-  modal.classList.add(`popup_is-opened`);
-}
-
-export function closeModal(modal) {
-  modal.classList.remove(`popup_is-opened`);
-}
-
 export function fillProfileForm() {
   profileNameInput.value = profileName.textContent;
   profileDescriptionInput.value = profileDescription.textContent;
-}
-
-export function handleOpenEditModal() {
-  openModal(profileEditModal);
-  fillProfileForm();
 }
 
 export function handleProfileFormSubmit(evt) {
