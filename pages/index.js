@@ -5,16 +5,14 @@ import {
   cardsContainer,
   newCardBtn,
   newCardModal,
-  closeNewCardBtn,
   profileForm,
-  profileFormInputs,
   cardForm,
-  cardFormInputs,
+  cardImagePopup
 } from "../utils/constants.js";
 import {
   handleProfileFormSubmit,
   handleCardFormSubmit,
-  fillProfileForm
+  fillProfileForm,
 } from "../utils/functions.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -28,14 +26,22 @@ const initialCardsSection = new Section(
   {
     items: initialCards,
     renderer: (item) => {
-      const cardInstance = new Card(item, "#card-template");
+      const cardInstance = new Card(
+        item,
+        "#card-template",
+        () => {
+          const imagePopup = new PopupwithImage(item, cardImagePopup);
+          imagePopup.open();
+          imagePopup.setEventListeners();
+        }
+      );
       const cardElement = cardInstance.generateCard(
         item.name,
         item.link,
         cardsContainer
       );
       initialCardsSection.setItem(cardElement);
-    }
+    },
   },
   cardsContainer
 );
@@ -46,38 +52,20 @@ initialCardsSection.renderItems();
 
 profileEditButton.addEventListener("click", () => {
   const profileEditForm = new PopupWithForm(
-    profileEditModal, handleProfileFormSubmit
+    profileEditModal,
+    handleProfileFormSubmit
   );
-  profileEditForm.open();
-  profileEditForm.setEventListeners();
 
   fillProfileForm();
+  profileEditForm.open();
+  profileEditForm.setEventListeners();
 });
 
 newCardBtn.addEventListener("click", () => {
-  const newCardForm = new PopupWithForm(
-    newCardModal, handleCardFormSubmit
-  );
+  const newCardForm = new PopupWithForm(newCardModal, handleCardFormSubmit);
   newCardForm.open();
   newCardForm.setEventListeners();
 });
-
-
-
-/*closeProfileEditButton.addEventListener("click", function () {
-  closeModal(profileEditModal);
-  profileFormInputs.forEach((inputElement) => {
-    profileFormValidator._hideInputError(inputElement);
-  });
-});
-
-closeNewCardBtn.addEventListener("click", function () {
-  closeModal(newCardModal);
-  cardFormInputs.forEach((inputElement) => {
-    cardFormValidator._hideInputError(inputElement);
-  });
-  cardForm.reset();
-});*/
 
 /*3. Validación de formularios*/
 

@@ -11,8 +11,9 @@ export default class Popup {
     this._popup.classList.remove("popup_is-opened");
   }
 
-  _handleEscClose = (evt) => {
-    if (evt.key === "Escape") {
+  _handleEscClose = (event)=> {
+    const overlay = this._popup;
+    if (event.key === "Escape") {
       this.close();
     }
   };
@@ -26,6 +27,6 @@ export default class Popup {
         this.close();
       }
     });
-    this._popup.addEventListener("keydown", this._handleEscClose);
+    document.addEventListener("keydown", this._handleEscClose);
   }
 }

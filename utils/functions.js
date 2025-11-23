@@ -3,7 +3,9 @@ import {
   profileDescription,
   profileNameInput,
   profileDescriptionInput,
-  profileEditModal,
+  newCardModal,
+  profileFormInputs,
+  cardFormInputs
 } from "./constants.js";
 
 export function fillProfileForm() {
@@ -11,20 +13,17 @@ export function fillProfileForm() {
   profileDescriptionInput.value = profileDescription.textContent;
 }
 
-export function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
+export function handleProfileFormSubmit() {
   profileName.textContent = profileNameInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
-  closeModal(profileEditModal);
 }
 
-export function handleCardFormSubmit(evt) {
-  evt.preventDefault();
-  const cardNameUInput = newCardModal.querySelector(
+export function handleCardFormSubmit() {
+  const cardNameInput = newCardModal.querySelector(
     ".popup__input_type_card-name"
   );
   const cardLinkInput = newCardModal.querySelector(".popup__input_type_url");
-  renderCard(cardNameUInput.value, cardLinkInput.value, cardsContainer);
-  evt.target.reset();
-  closeModal(newCardModal);
+  
+  cardNameInput.value;
+  cardLinkInput.value;
 }

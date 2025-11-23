@@ -1,8 +1,9 @@
 export default class Card {
-  constructor(data, selector) {
+  constructor(data, selector, handleCardClick) {
     this.name = data.name;
     this.link = data.link;
     this.selector = selector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -31,20 +32,9 @@ export default class Card {
       cardElement.remove();
     });
 
-    /*cardImage.addEventListener("click", function () {
-      const imageModal = document.querySelector("#image-popup");
-      const imageModalImg = imageModal.querySelector(".popup__image");
-      const imageModalCaption = imageModal.querySelector(".popup__caption");
-
-      imageModalImg.src = card.link;
-      imageModalImg.alt = card.name;
-      imageModalCaption.textContent = card.name;
-
-      const closeImageModalBtn = imageModal.querySelector(".popup__close");
-      closeImageModalBtn.addEventListener("click", function () {
-        handleCardClick();
-      });
-    });*/
+    cardImage.addEventListener("click", () => {
+      this._handleCardClick();
+    });
 
     return cardElement;
   }

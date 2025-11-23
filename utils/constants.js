@@ -34,17 +34,17 @@ export const profileName = document.querySelector(".profile__title");
 export const profileDescription = document.querySelector(
   ".profile__description"
 );
-export const profileNameInput = profileEditModal.querySelector(
+export const profileNameInput = document.querySelector(
   ".popup__input_type_name"
 );
-export const profileDescriptionInput = profileEditModal.querySelector(
+export const profileDescriptionInput = document.querySelector(
   ".popup__input_type_description"
 );
 
 export const cardsContainer = document.querySelector(".cards__list");
+export const cardImagePopup = document.querySelector("#image-popup");
 export const newCardBtn = document.querySelector(".profile__add-button");
 export const newCardModal = document.querySelector("#new-card-popup");
-export const closeNewCardBtn = newCardModal.querySelector(".popup__close");
 
 export const profileForm = document.querySelector(`#edit-profile-form`);
 export const profileFormInputs = profileForm.querySelectorAll(".popup__input");
