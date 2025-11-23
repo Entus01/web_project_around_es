@@ -10,7 +10,6 @@ import {
   profileFormInputs,
   cardForm,
   cardFormInputs,
-  overlay,
 } from "../utils/constants.js";
 import {
   handleProfileFormSubmit,
@@ -55,19 +54,21 @@ profileEditButton.addEventListener("click", () => {
   fillProfileForm();
 });
 
-/*profileEditButton.addEventListener("click", function () {
-  handleOpenEditModal();
+newCardBtn.addEventListener("click", () => {
+  const newCardForm = new PopupWithForm(
+    newCardModal, handleCardFormSubmit
+  );
+  newCardForm.open();
+  newCardForm.setEventListeners();
 });
 
-closeProfileEditButton.addEventListener("click", function () {
+
+
+/*closeProfileEditButton.addEventListener("click", function () {
   closeModal(profileEditModal);
   profileFormInputs.forEach((inputElement) => {
     profileFormValidator._hideInputError(inputElement);
   });
-});
-
-newCardBtn.addEventListener("click", function () {
-  openModal(newCardModal);
 });
 
 closeNewCardBtn.addEventListener("click", function () {
@@ -91,18 +92,3 @@ const cardFormValidator = new FormValidator(cardForm, {
   submitButton: ".popup__button",
 });
 cardFormValidator.setEventListeners();
-
-
-/*4. Crear las instancias de los popups*/
-
-/*const profileEditForm = new PopupWithForm(
-  "#profile-edit-modal",
-  handleProfileFormSubmit
-);
-profileEditForm.setEventListeners();
-
-const newCardForm = new PopupWithForm(
-  "#new-card-modal",
-  handleCardFormSubmit
-);
-newCardForm.setEventListeners();*/

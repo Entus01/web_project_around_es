@@ -51,5 +51,3 @@ export const profileFormInputs = profileForm.querySelectorAll(".popup__input");
 
 export const cardForm = document.querySelector(`#new-card-form`);
 export const cardFormInputs = cardForm.querySelectorAll(".popup__input");
-
-export const overlay = document.querySelector(".page__content");
