@@ -44,34 +44,50 @@ const initialCardsSection = new Section(
 
 initialCardsSection.renderItems();
 
-/*2. Manejo de los modales*/
+/*2. Crear instancias de los modales*/
 
-profileEditButton.addEventListener("click", () => {
-  const userInfo = new UserInfo({
-    nameSelector: profileName,
-    descriptionSelector: profileDescription,
-  });
-  const currentUserInfo = userInfo.getUserInfo();
-
-  profileNameInput.value = currentUserInfo.name;
-  profileDescriptionInput.value = currentUserInfo.description;
-
-  console.log(profileNameInput.value, profileDescriptionInput.value);
-
-  const profilePopup = new PopupWithForm(profileEditModal, (inputValues) => {
-    userInfo.setUserInfo({
-      name: inputValues[0].value,
-      description: inputValues[1].value,
-    });
-    console.log(name, description);
-  });
-  profilePopup.open();
-  profilePopup.setEventListeners();
+const userInfo = new UserInfo({
+  nameSelector: profileName,
+  descriptionSelector: profileDescription,
 });
 
-newCardBtn.addEventListener("click", () => {});
+const profilePopup = new PopupWithForm(profileEditModal, (inputValues) => {
+  userInfo.setUserInfo({
+    user: inputValues[0].value,
+    description: inputValues[1].value,
+  });
+});
+profilePopup.setEventListeners();
 
-/*3. Validación de formularios*/
+const newCardPopup = new PopupWithForm(newCardModal, (inputValues) => {
+  const cardData = {
+    user: inputValues[0].value,
+    Description: inputValues[1].value,
+  };
+  const newCard = new Card(cardData, "#card-template", () => {
+    const imagePopup = new PopupwithImage(cardData, cardImagePopup);
+    imagePopup.open();
+    imagePopup.setEventListeners();
+  });
+  const cardElement = newCard.generateCard(cardData.name, cardData.link);
+  cardsContainer.prepend(cardElement);
+});
+newCardPopup.setEventListeners();
+
+/*3. Manipular los modales*/
+
+profileEditButton.addEventListener("click", () => {
+  const currentUserInfo = userInfo.getUserInfo();
+  profileNameInput.value = currentUserInfo.user;
+  profileDescriptionInput.value = currentUserInfo.description;
+  profilePopup.open();
+});
+
+newCardBtn.addEventListener("click", () => {
+  newCardPopup.open();
+});
+
+/*4. Validar formularios*/
 
 const profileFormValidator = new FormValidator(profileForm, {
   input: ".popup__input",

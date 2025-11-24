@@ -37,8 +37,6 @@ export const cardImagePopup = document.querySelector("#image-popup");
 
 export const newCardBtn = document.querySelector(".profile__add-button");
 export const newCardModal = document.querySelector("#new-card-popup");
-export const cardNameInput = newCardModal.querySelector(".popup__input_type_card-name");
-export const cardLinkInput = newCardModal.querySelector(".popup__input_type_url");
 
 export const profileForm = document.querySelector(`#edit-profile-form`);
 export const profileFormInputs = profileForm.querySelectorAll(".popup__input");
