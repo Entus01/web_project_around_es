@@ -1,9 +1,9 @@
 import {
-  initialCards,
   profileEditButton,
   profileEditModal,
   profileName,
   profileDescription,
+  profileAvatar,
   profileNameInput,
   profileDescriptionInput,
   cardsContainer,
@@ -20,7 +20,33 @@ import PopupwithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 
+/*0. Cargar la informacion del usuario desde el servidor*/
+
+fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
+  headers: {
+    authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+  },
+})
+  .then((res) => res.json())
+  .then((profile) => {
+    profileName.textContent = profile.name;
+    profileDescription.textContent = profile.about;
+    profileAvatar.src = profile.avatar;
+  });
+
 /*1. Renderizar las tarjetas iniciales*/
+
+const initialCards = Array.of(
+  fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
+    headers: {
+      authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+    },
+  })
+    .then((res) => res.json())
+    .then((cardArray) => {
+      return cardArray;
+    })
+);
 
 const initialCardsSection = new Section(
   {
@@ -41,6 +67,8 @@ const initialCardsSection = new Section(
   },
   cardsContainer
 );
+
+console.log(initialCardsSection);
 
 initialCardsSection.renderItems();
 
