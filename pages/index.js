@@ -34,7 +34,7 @@ fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
     profileAvatar.src = profile.avatar;
   });
 
-/*1. Renderizar las tarjetas iniciales*/
+/*1. Renderizar las tarjetas en el servidor*/
 
 fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
   headers: {
@@ -62,8 +62,6 @@ fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
       },
       cardsContainer
     );
-
-    console.log(initialCardsSection);
 
     initialCardsSection.renderItems();
   });
