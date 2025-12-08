@@ -56,6 +56,17 @@ const profilePopup = new PopupWithForm(profileEditModal, (inputValues) => {
     user: inputValues[0].value,
     description: inputValues[1].value,
   });
+  fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
+    method: "PATCH",
+    headers: {
+      authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+      "Content-Type": "application/json",
+    },
+    BODY: JSON.stringify({
+      name: profileName,
+      about: profileDescription,
+    }),
+  });
 });
 profilePopup.setEventListeners();
 
@@ -64,6 +75,7 @@ const newCardPopup = new PopupWithForm(newCardModal, (inputValues) => {
     user: inputValues[0].value,
     Description: inputValues[1].value,
   };
+
   const newCard = new Card(cardData, "#card-template", () => {
     const imagePopup = new PopupwithImage(cardData, cardImagePopup);
     imagePopup.open();
