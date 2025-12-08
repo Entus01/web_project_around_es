@@ -4,6 +4,7 @@ export default class Card {
     this.link = data.link;
     this.selector = selector;
     this._handleCardClick = handleCardClick;
+    this._isLiked = false;
   }
 
   _getTemplate() {
