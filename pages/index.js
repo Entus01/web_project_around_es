@@ -78,27 +78,26 @@ const profilePopup = new PopupWithForm(profileEditModal, (profileFormInputs) => 
     user: profileFormInputs[0].value,
     description: profileFormInputs[1].value,
   });
+  fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
+    method: "PATCH",
+    headers: {
+      authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: profileFormInputs[0].value,
+      about: profileFormInputs[1].value,
+    }),
+  });
 });
 profilePopup.setEventListeners();
 
 const newCardPopup = new PopupWithForm(newCardModal, (cardFormInputs) => {
   const cardData = {
     user: cardFormInputs[0].value,
-    link: cardFormInputs[1].value,
+    Description: cardFormInputs[1].value,
   };
-  fetch("https://around-api.es.tripleten-services.com/v1/cards/",
-    {
-      method: 'POST',
-      headers: {
-        authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        name: cardData.user,
-        link: cardData.link,
-      })
-    }
-  )
+
   const newCard = new Card(cardData, "#card-template", () => {
     const imagePopup = new PopupwithImage(cardData, cardImagePopup);
     imagePopup.open();
