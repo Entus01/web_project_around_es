@@ -91,7 +91,9 @@
               required
             />
             <span class="popup__input-error description-input-error"></span>
-            <button class="button popup__button" type="submit" disabled>Guardar</button>
+            <button class="button popup__button" type="submit" disabled>
+              Guardar
+            </button>
           </form>
         </div>
       </div>
@@ -139,17 +141,15 @@
           <p class="popup__caption"></p>
         </div>
       </div>
-      <div class="popup" id="confirmation-popup">
+      <div class="popup popup_is-opened" id="confirmation-popup">
         <div class="popup__content">
           <button
             aria-label="Cerrar ventana emergente"
             class="popup__close"
             type="button"
           ></button>
-          <div class="popup__confirmation">
-            <h3>¿Estás seguro?</h3>
-            <button class="button popup__button" type="submit" disabled>Sí</button>
-          </div>
+          <h3 class="popup__title">¿Estás seguro?</h3>
+          <button class="button popup__button" type="submit">Sí</button>
         </div>
       </div>
     </div>
