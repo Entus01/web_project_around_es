@@ -36,41 +36,37 @@ fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
 
 /*1. Renderizar las tarjetas iniciales*/
 
-const initialCards = Array.of(
-  fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
-    headers: {
-      authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
-    },
-  })
-    .then((res) => res.json())
-    .then((cardArray) => {
-      return cardArray;
-    })
-);
-
-const initialCardsSection = new Section(
-  {
-    items: initialCards,
-    renderer: (item) => {
-      const cardInstance = new Card(item, "#card-template", () => {
-        const imagePopup = new PopupwithImage(item, cardImagePopup);
-        imagePopup.open();
-        imagePopup.setEventListeners();
-      });
-      const cardElement = cardInstance.generateCard(
-        item.name,
-        item.link,
-        cardsContainer
-      );
-      initialCardsSection.setItem(cardElement);
-    },
+fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
+  headers: {
+    authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
   },
-  cardsContainer
-);
+})
+  .then((res) => res.json())
+  .then((serverCards) => {
+    const initialCardsSection = new Section(
+      {
+        items: serverCards,
+        renderer: (item) => {
+          const cardInstance = new Card(item, "#card-template", () => {
+            const imagePopup = new PopupwithImage(item, cardImagePopup);
+            imagePopup.open();
+            imagePopup.setEventListeners();
+          });
+          const cardElement = cardInstance.generateCard(
+            item.name,
+            item.link,
+            cardsContainer
+          );
+          initialCardsSection.setItem(cardElement);
+        },
+      },
+      cardsContainer
+    );
 
-console.log(initialCardsSection);
+    console.log(initialCardsSection);
 
-initialCardsSection.renderItems();
+    initialCardsSection.renderItems();
+  });
 
 /*2. Crear instancias de los modales*/
 
