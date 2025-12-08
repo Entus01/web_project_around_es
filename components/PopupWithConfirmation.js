@@ -3,4 +3,8 @@ export default class PopupWithConfirmation extends Popup {
         super(popupSelector);
         this._handleConfirmationSubmit = handleConfirmationSubmit;
     }
+
+    setEventListeners() {
+        super.setEventListeners();
+    }
 }
