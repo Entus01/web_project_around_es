@@ -51,10 +51,10 @@ const userInfo = new UserInfo({
   descriptionSelector: profileDescription,
 });
 
-const profilePopup = new PopupWithForm(profileEditModal, (inputValues) => {
+const profilePopup = new PopupWithForm(profileEditModal, (profileFormInputs) => {
   userInfo.setUserInfo({
-    user: inputValues[0].value,
-    description: inputValues[1].value,
+    user: profileFormInputs[0].value,
+    description: profileFormInputs[1].value,
   });
   fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
     method: "PATCH",
@@ -62,18 +62,18 @@ const profilePopup = new PopupWithForm(profileEditModal, (inputValues) => {
       authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
       "Content-Type": "application/json",
     },
-    BODY: JSON.stringify({
-      name: profileName,
-      about: profileDescription,
+    body: JSON.stringify({
+      name: profileFormInputs[0].value,
+      about: profileFormInputs[1].value,
     }),
   });
 });
 profilePopup.setEventListeners();
 
-const newCardPopup = new PopupWithForm(newCardModal, (inputValues) => {
+const newCardPopup = new PopupWithForm(newCardModal, (cardFormInputs) => {
   const cardData = {
-    user: inputValues[0].value,
-    Description: inputValues[1].value,
+    user: cardFormInputs[0].value,
+    Description: cardFormInputs[1].value,
   };
 
   const newCard = new Card(cardData, "#card-template", () => {
