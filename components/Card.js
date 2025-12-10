@@ -1,5 +1,5 @@
 export default class Card {
-  constructor(data, selector, handleCardClick, handleCardDelete) {
+  constructor(data, selector, handleCardClick, handleCardDelete, handleCardLike) {
     this.name = data.name;
     this.link = data.link;
     this._isLiked = data._isLiked;
@@ -7,7 +7,7 @@ export default class Card {
     this.selector = selector;
     this._handleCardClick = handleCardClick;
     this._handleCardDelete = handleCardDelete;
-    this._isLiked = false;
+    this._handleCardLike = handleCardLike;
   }
 
   _getTemplate() {
@@ -28,8 +28,15 @@ export default class Card {
     cardImage.alt = card.name;
 
     const likeBtn = cardElement.querySelector(".card__like-button");
-    likeBtn.addEventListener("click", function () {
-      likeBtn.classList.toggle("card__like-button_is-active");
+    likeBtn._isLiked = card._isLiked;
+    likeBtn.addEventListener("click", () => {
+      if (likeBtn._isLiked) {
+        likeBtn.classList.toggle("card__like-button_is-active");
+        this._handleCardLike();
+      } else {
+        likeBtn.classList.toggle("card__like-button_is-active");
+        this._handleCardLike();
+      };
     });
     const deleteBtn = cardElement.querySelector(".card__delete-button");
     deleteBtn.addEventListener("click", () => {
