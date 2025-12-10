@@ -12,6 +12,7 @@ import {
   profileForm,
   cardForm,
   cardImagePopup,
+  deleteConfirmationPopup,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -19,10 +20,12 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import PopupwithImage from "../components/PopupWithImage.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
+import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 
 /*0. Cargar la informacion del usuario desde el servidor*/
 
 fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
+  method: "GET",
   headers: {
     authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
   },
@@ -47,11 +50,35 @@ fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
       {
         items: serverCards,
         renderer: (item) => {
-          const cardInstance = new Card(item, "#card-template", () => {
-            const imagePopup = new PopupwithImage(item, cardImagePopup);
-            imagePopup.open();
-            imagePopup.setEventListeners();
-          });
+          const cardInstance = new Card(
+            item,
+            "#card-template",
+            () => {
+              const imagePopup = new PopupwithImage(item, cardImagePopup);
+              imagePopup.open();
+              imagePopup.setEventListeners();
+            },
+            () => {
+              const confirmationPopup = new PopupWithConfirmation(
+                deleteConfirmationPopup,
+                item,
+                () => {
+                  fetch(
+                    `https://around-api.es.tripleten-services.com/v1/cards/${item._id}`,
+                    {
+                      method: "DELETE",
+                      headers: {
+                        authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+                      },
+                    }
+                  );
+                  cardElement.remove();
+                }
+              );
+              confirmationPopup.open();
+              confirmationPopup.setEventListeners();
+            }
+          );
           const cardElement = cardInstance.generateCard(
             item.name,
             item.link,
@@ -73,23 +100,26 @@ const userInfo = new UserInfo({
   descriptionSelector: profileDescription,
 });
 
-const profilePopup = new PopupWithForm(profileEditModal, (profileFormInputs) => {
-  userInfo.setUserInfo({
-    user: profileFormInputs[0].value,
-    description: profileFormInputs[1].value,
-  });
-  fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
-    method: "PATCH",
-    headers: {
-      authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: profileFormInputs[0].value,
-      about: profileFormInputs[1].value,
-    }),
-  });
-});
+const profilePopup = new PopupWithForm(
+  profileEditModal,
+  (profileFormInputs) => {
+    userInfo.setUserInfo({
+      user: profileFormInputs[0].value,
+      description: profileFormInputs[1].value,
+    });
+    fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
+      method: "PATCH",
+      headers: {
+        authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: profileFormInputs[0].value,
+        about: profileFormInputs[1].value,
+      }),
+    });
+  }
+);
 profilePopup.setEventListeners();
 
 const newCardPopup = new PopupWithForm(newCardModal, (cardFormInputs) => {
@@ -98,13 +128,50 @@ const newCardPopup = new PopupWithForm(newCardModal, (cardFormInputs) => {
     Description: cardFormInputs[1].value,
   };
 
-  const newCard = new Card(cardData, "#card-template", () => {
-    const imagePopup = new PopupwithImage(cardData, cardImagePopup);
-    imagePopup.open();
-    imagePopup.setEventListeners();
-  });
+  const newCard = new Card(
+    cardData,
+    "#card-template",
+    () => {
+      const imagePopup = new PopupwithImage(cardData, cardImagePopup);
+      imagePopup.open();
+      imagePopup.setEventListeners();
+    },
+    () => {
+      const confirmationPopup = new PopupWithConfirmation(
+        deleteConfirmationPopup,
+        cardData,
+        () => {
+          console.log(cardData);
+          fetch(
+            `https://around-api.es.tripleten-services.com/v1/cards/${cardData._id}`,
+            {
+              method: "DELETE",
+              headers: {
+                authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+              },
+            }
+          );
+          cardElement.remove();
+        }
+      );
+      confirmationPopup.open();
+      confirmationPopup.setEventListeners();
+    }
+  );
   const cardElement = newCard.generateCard(cardData.name, cardData.link);
-  cardsContainer.prepend(cardElement);
+  console.log(cardData);
+  fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
+            method: "POST",
+            headers: {
+              authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+              name: cardData.user,
+              link: cardData.Description,
+            })
+          })
+  cardsContainer.append(cardElement);
 });
 newCardPopup.setEventListeners();
 
