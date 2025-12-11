@@ -13,6 +13,7 @@ import {
   cardForm,
   cardImagePopup,
   deleteConfirmationPopup,
+  profilePictureForm,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -231,3 +232,9 @@ const cardFormValidator = new FormValidator(cardForm, {
   submitButton: ".popup__button",
 });
 cardFormValidator.setEventListeners();
+
+const pictureFormValidator = new FormValidator(profilePictureForm, {
+  input: ".popup__input",
+  submitButton: ".popup__button",
+});
+pictureFormValidator.setEventListeners();
