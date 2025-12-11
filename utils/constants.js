@@ -45,4 +45,6 @@ export const profileFormInputs = profileForm.querySelectorAll(".popup__input");
 export const cardForm = document.querySelector(`#new-card-form`);
 export const cardFormInputs = cardForm.querySelectorAll(".popup__input");
 
-export const deleteConfirmationPopup = document.querySelector("#delete-confirmation-popup")
+export const deleteConfirmationPopup = document.querySelector("#delete-confirmation-popup");
+
+export const profileImageForm = document.querySelector("#profile-picture-popup");

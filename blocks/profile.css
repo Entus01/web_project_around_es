@@ -37,6 +37,20 @@
   max-width: 373px;
 }
 
+.image__edit-button {
+  width: 120px;
+  height: 120px;
+  background: url("../images/Vector.png") center no-repeat;
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0%;
+  margin-right: 29px;
+}
+
+.image__edit-button:hover {
+  opacity: 1;
+}
+
 .profile__image {
   width: 120px;
   height: 120px;
