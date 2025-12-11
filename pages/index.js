@@ -14,6 +14,8 @@ import {
   cardImagePopup,
   deleteConfirmationPopup,
   profilePictureForm,
+  profilePictureBtn,
+  profilePictureInputs,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -38,7 +40,7 @@ fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
     profileAvatar.src = profile.avatar;
   });
 
-/*1. Renderizar las tarjetas en el servidor*/
+/*1. Renderizar las tarjetas guardadas en el servidor*/
 
 fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
   headers: {
@@ -115,7 +117,7 @@ fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
     initialCardsSection.renderItems();
   });
 
-/*2. Crear instancias de los modales*/
+/*2. Editar el perfil*/
 
 const userInfo = new UserInfo({
   nameSelector: profileName,
@@ -143,6 +145,23 @@ const profilePopup = new PopupWithForm(
   }
 );
 profilePopup.setEventListeners();
+
+const profileImagePopup = new PopupWithForm(profilePictureForm,
+  (profilePictureInputs) => {
+    fetch("https://around-api.es.tripleten-services.com/v1/users/me/avatar", {
+      method: "PATCH",
+      headers: {
+        authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+        "content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        avatar: profilePictureInputs.value, 
+      })
+    });
+  });
+profileImagePopup.setEventListeners();
+
+/*3. Crear una nueva tarjeta*/
 
 const newCardPopup = new PopupWithForm(newCardModal, (cardFormInputs) => {
   const cardData = {
@@ -206,7 +225,7 @@ const newCardPopup = new PopupWithForm(newCardModal, (cardFormInputs) => {
 });
 newCardPopup.setEventListeners();
 
-/*3. Manipular los modales*/
+/*4. Abrir los modales*/
 
 profileEditButton.addEventListener("click", () => {
   const currentUserInfo = userInfo.getUserInfo();
@@ -219,7 +238,11 @@ newCardBtn.addEventListener("click", () => {
   newCardPopup.open();
 });
 
-/*4. Validar formularios*/
+profilePictureBtn.addEventListener("click", () => {
+  profileImagePopup.open();
+});
+
+/*5. Validar formularios*/
 
 const profileFormValidator = new FormValidator(profileForm, {
   input: ".popup__input",
