@@ -77,6 +77,27 @@ fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
               );
               confirmationPopup.open();
               confirmationPopup.setEventListeners();
+            },
+            () => {
+              fetch(
+                `https://around-api.es.tripleten-services.com/v1/cards/${item._id}/likes`,
+                {
+                  method: "PUT",
+                  headers: {
+                    authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
+            },
+            () => {
+              fetch(`https://around-api.es.tripleten-services.com/v1/cards/${item._id}/likes`, {
+                method: "DELETE",
+                headers: {
+                  authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+                  "Content-Type": "application/json",
+                },
+              });
             }
           );
           const cardElement = cardInstance.generateCard(
@@ -105,7 +126,7 @@ const profilePopup = new PopupWithForm(
   (profileFormInputs) => {
     userInfo.setUserInfo({
       user: profileFormInputs[0].value,
-      description: profileFormInputs[1].value,
+      about: profileFormInputs[1].value,
     });
     fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
       method: "PATCH",
@@ -125,7 +146,7 @@ profilePopup.setEventListeners();
 const newCardPopup = new PopupWithForm(newCardModal, (cardFormInputs) => {
   const cardData = {
     user: cardFormInputs[0].value,
-    Description: cardFormInputs[1].value,
+    link: cardFormInputs[1].value,
   };
 
   const newCard = new Card(
@@ -158,20 +179,29 @@ const newCardPopup = new PopupWithForm(newCardModal, (cardFormInputs) => {
       confirmationPopup.setEventListeners();
     }
   );
-  const cardElement = newCard.generateCard(cardData.name, cardData.link);
-  console.log(cardData);
+  const cardElement = newCard.generateCard(cardData.user, cardData.link);
   fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
-            method: "POST",
-            headers: {
-              authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
-              "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-              name: cardData.user,
-              link: cardData.Description,
-            })
-          })
-  cardsContainer.append(cardElement);
+    method: "POST",
+    headers: {
+      authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      name: cardData.user,
+      link: cardData.link,
+      isLiked: cardData.isLiked,
+    }),
+  })
+    .then((res) => {
+      if (res.ok) {
+        cardsContainer.append(cardElement);
+      } else {
+        console.log("error");
+      }
+    })
+    .catch((err) => {
+      console.log(err.status);
+    });
 });
 newCardPopup.setEventListeners();
 

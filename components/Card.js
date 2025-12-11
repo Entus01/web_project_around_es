@@ -1,14 +1,15 @@
 export default class Card {
-  constructor(data, selector, handleCardClick, handleCardDelete, handleCardLike) {
-    this.name = data.name;
+  constructor(data, selector, handleCardClick, handleCardDelete, addCardLike, removeCardLike) {
+    this.user = data.user;
     this.link = data.link;
-    this._isLiked = data._isLiked;
     this._id = data._id
+    this._isLiked = data.isLiked;
     this.selector = selector;
     this._handleCardClick = handleCardClick;
     this._handleCardDelete = handleCardDelete;
-    this._handleCardLike = handleCardLike;
-  }
+    this._addCardLike = addCardLike;
+    this._removeCardLike = removeCardLike; 
+    }
 
   _getTemplate() {
     const cardElement = document
@@ -22,23 +23,29 @@ export default class Card {
     const cardElement = this._getTemplate();
     const cardTitle = cardElement.querySelector(".card__title");
     const cardImage = cardElement.querySelector(".card__image");
+    const likeBtn = cardElement.querySelector(".card__like-button");
+    const deleteBtn = cardElement.querySelector(".card__delete-button");
 
+    if(this._isLiked) {
+      likeBtn.classList.add("card__like-button_is-active");
+    } else {
+      likeBtn.classList.remove("card__like-button_is-active");
+    }
     cardTitle.textContent = card.name;
     cardImage.src = card.link;
     cardImage.alt = card.name;
 
-    const likeBtn = cardElement.querySelector(".card__like-button");
-    likeBtn._isLiked = card._isLiked;
     likeBtn.addEventListener("click", () => {
-      if (likeBtn._isLiked) {
-        likeBtn.classList.toggle("card__like-button_is-active");
-        this._handleCardLike();
+      if (likeBtn.classList.contains("card__like-button_is-active")) {
+        this._isLiked = true;
+        likeBtn.classList.remove("card__like-button_is-active");
+        this._removeCardLike();
       } else {
-        likeBtn.classList.toggle("card__like-button_is-active");
-        this._handleCardLike();
+        this._isLiked = false;
+        likeBtn.classList.add("card__like-button_is-active");
+        this._addCardLike();
       };
     });
-    const deleteBtn = cardElement.querySelector(".card__delete-button");
     deleteBtn.addEventListener("click", () => {
       this._handleCardDelete();
     });
