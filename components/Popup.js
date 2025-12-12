@@ -10,6 +10,10 @@ export default class Popup {
 
   close() {
     this._popup.classList.remove("popup_is-opened");
+    const errors = this._popup.querySelectorAll(".popup__input-error_active, .popup__input_type_error");
+    errors.forEach((error) =>{
+      error.classList.remove("popup__input-error_active", "popup__input_type_error");
+    });
   }
 
   _handleEscClose = (event)=> {
