@@ -15,6 +15,10 @@ import {
   deleteConfirmationPopup,
   profilePictureForm,
   profilePictureBtn,
+  profileSubmitBtn,
+  newCardSubmitBtn,
+  newImageSubmitBtn,
+  deleteCardSubmitBtn,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -27,7 +31,6 @@ import PopupWithConfirmation from "../components/PopupWithConfirmation.js";
 /*0. Cargar la informacion del usuario desde el servidor*/
 
 fetch("https://around-api.es.tripleten-services.com/v1/users/me", {
-  method: "GET",
   headers: {
     authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
   },
@@ -65,6 +68,7 @@ fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
                 deleteConfirmationPopup,
                 item,
                 () => {
+                  deleteCardSubmitBtn.textContent = "Guardando...";
                   fetch(
                     `https://around-api.es.tripleten-services.com/v1/cards/${item._id}`,
                     {
@@ -73,7 +77,20 @@ fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
                         authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
                       },
                     }
-                  );
+                  )
+                    .then((res) => {
+                      if (res.ok) {
+                        console.log(res);
+                      } else {
+                        console.log(`Error: ${res}`);
+                      }
+                    })
+                    .catch((err) => {
+                      console.log(`Error: ${err.status}`);
+                    })
+                    .finally(() => {
+                      deleteCardSubmitBtn.textContent = "Sí";
+                    });
                   cardElement.remove();
                 }
               );
@@ -93,13 +110,16 @@ fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
               );
             },
             () => {
-              fetch(`https://around-api.es.tripleten-services.com/v1/cards/${item._id}/likes`, {
-                method: "DELETE",
-                headers: {
-                  authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
-                  "Content-Type": "application/json",
-                },
-              });
+              fetch(
+                `https://around-api.es.tripleten-services.com/v1/cards/${item._id}/likes`,
+                {
+                  method: "DELETE",
+                  headers: {
+                    authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
+                    "Content-Type": "application/json",
+                  },
+                }
+              );
             }
           );
           const cardElement = cardInstance.generateCard(
@@ -125,7 +145,8 @@ const userInfo = new UserInfo({
 
 const profilePopup = new PopupWithForm(
   profileEditModal,
-  (profileFormInputs) => { 
+  (profileFormInputs) => {
+    profileSubmitBtn.textContent = "Guardando...";
     userInfo.setUserInfo({
       user: profileFormInputs[0].value,
       about: profileFormInputs[1].value,
@@ -140,13 +161,25 @@ const profilePopup = new PopupWithForm(
         name: profileFormInputs[0].value,
         about: profileFormInputs[1].value,
       }),
-    });
+    })
+      .then((res) => {
+        if (res.ok) {
+          profileSubmitBtn.textContent = "Guardar";
+        } else {
+          console.log("Error");
+        }
+      })
+      .catch((err) => {
+        console.log(`Error: ${err.status}`);
+      });
   }
 );
 profilePopup.setEventListeners();
 
-const profileImagePopup = new PopupWithForm(profilePictureForm,
+const profileImagePopup = new PopupWithForm(
+  profilePictureForm,
   (profilePictureInput) => {
+    newImageSubmitBtn.textContent = "Guardando...";
     profileAvatar.src = profilePictureInput[0].value;
     fetch("https://around-api.es.tripleten-services.com/v1/users/me/avatar", {
       method: "PATCH",
@@ -156,9 +189,23 @@ const profileImagePopup = new PopupWithForm(profilePictureForm,
       },
       body: JSON.stringify({
         avatar: profileAvatar.src,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          console.log(res);
+        } else {
+          console.log(`Error: ${res}`);
+        }
       })
-    });
-  });
+      .catch((err) => {
+        console.log(`Error: ${err.status}`);
+      })
+      .finally(() => {
+        newImageSubmitBtn.textContent = "Guardar";
+      });
+  }
+);
 profileImagePopup.setEventListeners();
 
 /*3. Crear una nueva tarjeta*/
@@ -183,6 +230,7 @@ const newCardPopup = new PopupWithForm(newCardModal, (cardFormInputs) => {
         cardData,
         () => {
           console.log(cardData);
+          deleteCardSubmitBtn.textContent = "Guardando...";
           fetch(
             `https://around-api.es.tripleten-services.com/v1/cards/${cardData._id}`,
             {
@@ -191,7 +239,20 @@ const newCardPopup = new PopupWithForm(newCardModal, (cardFormInputs) => {
                 authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
               },
             }
-          );
+          )
+            .then((res) => {
+              if (res.ok) {
+                console.log(res);
+              } else {
+                console.log(`Error: ${res}`);
+              }
+            })
+            .catch((err) => {
+              console.log(`Error: ${err.status}`);
+            })
+            .finally(() => {
+              deleteCardSubmitBtn.textContent = "Sí";
+            });
           cardElement.remove();
         }
       );
@@ -200,6 +261,7 @@ const newCardPopup = new PopupWithForm(newCardModal, (cardFormInputs) => {
     }
   );
   const cardElement = newCard.generateCard(cardData.user, cardData.link);
+  newCardSubmitBtn.textContent = "Guardando...";
   fetch("https://around-api.es.tripleten-services.com/v1/cards/", {
     method: "POST",
     headers: {
@@ -221,6 +283,9 @@ const newCardPopup = new PopupWithForm(newCardModal, (cardFormInputs) => {
     })
     .catch((err) => {
       console.log(err.status);
+    })
+    .finally(() => {
+      newCardSubmitBtn.textContent = "Crear";
     });
 });
 newCardPopup.setEventListeners();

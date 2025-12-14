@@ -55,3 +55,8 @@ export const deleteConfirmationPopup = document.querySelector("#delete-confirmat
 
 export const profilePictureBtn = document.querySelector(".image__edit-button")
 export const profilePictureForm = document.querySelector("#profile-picture-popup");
+
+export const profileSubmitBtn = profileForm.querySelector(".popup__button");
+export const newCardSubmitBtn = newCardModal.querySelector(".popup__button");
+export const newImageSubmitBtn = profilePictureForm.querySelector(".popup__button");
+export const deleteCardSubmitBtn = deleteConfirmationPopup.querySelector(".popup__button");
