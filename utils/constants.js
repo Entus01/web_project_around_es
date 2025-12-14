@@ -1,4 +1,4 @@
-/*export const initialCards = [
+/* const initialCards = [
   {
     name: "Valle de Yosemite",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_yosemite.jpg"
@@ -23,7 +23,13 @@
     name: "Lago di Braies",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/web-code/moved_lago.jpg"
   },
-];*/
+];
+
+const profileImage = {
+  avatar: "https://practicum-content.s3.us-west-1.amazonaws.com/frontend-developer/common/avatar.jpg"
+}
+
+*/
 
 export const profileEditButton = document.querySelector(".profile__edit-button");
 export const profileEditModal = document.querySelector(`#edit-popup`);
@@ -49,4 +55,3 @@ export const deleteConfirmationPopup = document.querySelector("#delete-confirmat
 
 export const profilePictureBtn = document.querySelector(".image__edit-button")
 export const profilePictureForm = document.querySelector("#profile-picture-popup");
-export const profilePictureInputs = profilePictureForm.querySelectorAll(".popup__input");

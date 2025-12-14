@@ -15,7 +15,6 @@ import {
   deleteConfirmationPopup,
   profilePictureForm,
   profilePictureBtn,
-  profilePictureInputs,
 } from "../utils/constants.js";
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
@@ -126,7 +125,7 @@ const userInfo = new UserInfo({
 
 const profilePopup = new PopupWithForm(
   profileEditModal,
-  (profileFormInputs) => {
+  (profileFormInputs) => { 
     userInfo.setUserInfo({
       user: profileFormInputs[0].value,
       about: profileFormInputs[1].value,
@@ -147,15 +146,16 @@ const profilePopup = new PopupWithForm(
 profilePopup.setEventListeners();
 
 const profileImagePopup = new PopupWithForm(profilePictureForm,
-  (profilePictureInputs) => {
+  (profilePictureInput) => {
+    profileAvatar.src = profilePictureInput[0].value;
     fetch("https://around-api.es.tripleten-services.com/v1/users/me/avatar", {
       method: "PATCH",
       headers: {
         authorization: "78e5c9c5-c9ab-4489-9007-d16fbf64fbc8",
-        "content-Type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        avatar: profilePictureInputs.value, 
+        avatar: profileAvatar.src,
       })
     });
   });
@@ -230,7 +230,7 @@ newCardPopup.setEventListeners();
 profileEditButton.addEventListener("click", () => {
   const currentUserInfo = userInfo.getUserInfo();
   profileNameInput.value = currentUserInfo.user;
-  profileDescriptionInput.value = currentUserInfo.description;
+  profileDescriptionInput.value = currentUserInfo.about;
   profilePopup.open();
 });
 
