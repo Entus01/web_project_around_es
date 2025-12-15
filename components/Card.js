@@ -58,7 +58,7 @@ export default class Card {
   }
 
   generateCard(name, link) {
-    const card = { name, link };
+    const card = { name, link, isLiked: this._isLiked };
     const cardElement = this._getCardElement(card);
 
     return cardElement;
