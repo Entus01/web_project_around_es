@@ -118,6 +118,11 @@ const profilePopup = new PopupWithForm(
       })
       .then(() => {
         profileSubmitBtn.textContent = "Guardar";
+      }).catch((err) => {
+        console.log(`Error: ${err}`);
+      })
+      .finally(() =>{
+        profilePopup.close();
       });
   }
 );
